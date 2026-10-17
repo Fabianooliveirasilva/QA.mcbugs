@@ -10,7 +10,7 @@
 | Browser | Chromium |
 | Test runner | `npx playwright test --reporter=line` |
 | Execution date | 2026-10-17 |
-| Result | **2 passed, 0 failed** |
+| Result | **11 passed, 0 failed** |
 
 ## Executive summary
 
@@ -18,6 +18,15 @@ The automated regression suite executed both complete customer journeys currentl
 
 - CT001: dine-in order paid by PIX
 - CT002: takeaway order paid by credit card
+- CT003: dine-in order paid by debit card
+- CT004: takeaway order paid by PIX
+- CT005: whitespace-only customer-name validation
+- CT006: cart persistence after page reload
+- CT007: pending-order cancellation and state cleanup
+- CT008: takeaway order paid by debit card
+- CT009: repeated addition of the same product
+- CT010: empty-cart state
+- CT011: invalid persisted cart recovery
 
 Both tests passed in Chromium. The suite exercised the UI through accessible roles and labels, validated route changes, checked local storage state, verified product and cart data, and confirmed payment-specific confirmation pages.
 
@@ -27,6 +36,15 @@ Both tests passed in Chromium. The suite exercised the UI through accessible rol
 |---|---|---|:---:|
 | CT001 | Dine-in | Big Mock x2, Coca-Crash x1, PIX, dine-in confirmation, state reset | PASS |
 | CT002 | Takeaway | Batatas Full Stack x2, Fanta Warning x3, credit card, takeaway confirmation, state reset | PASS |
+| CT003 | Dine-in | Big Mock x1, debit card, dine-in confirmation | PASS |
+| CT004 | Takeaway | Batatas Full Stack x1, PIX, takeaway confirmation | PASS |
+| CT005 | Validation | Whitespace-only customer name keeps checkout open | PASS |
+| CT006 | Cart state | Big Mock remains after page reload | PASS |
+| CT007 | Cancellation | Pending order cancellation clears application state | PASS |
+| CT008 | Takeaway | Batatas Full Stack x1, debit card, takeaway confirmation | PASS |
+| CT009 | Cart rules | Repeated Big Mock addition consolidates quantity and total | PASS |
+| CT010 | Empty state | Direct `/cart` access displays empty-cart guidance | PASS |
+| CT011 | Resilience | Invalid cart JSON recovers to an empty cart | PASS with console observation |
 
 ### Covered functional areas
 
@@ -45,6 +63,12 @@ Both tests passed in Chromium. The suite exercised the UI through accessible rol
 - Credit-card confirmation route
 - Confirmation content by order type
 - Cart and order-type cleanup after a new order
+- Pending-order cancellation and cleanup of current-order state
+- Whitespace-only customer-name rejection
+- Cart recovery after page reload
+- Repeated-product quantity consolidation
+- Empty-cart direct access
+- Invalid persisted cart recovery
 
 ## Test implementation
 
@@ -94,6 +118,22 @@ The suite uses:
 
 The test files are intentionally readable as executable business journeys, which makes them useful both as regression checks and as living acceptance-test documentation.
 
+### Additional regression scenarios
+
+Source: [`playwright/e2e/ct003-ct007-regression.spec.ts`](../../playwright/e2e/ct003-ct007-regression.spec.ts)
+
+These five scenarios were first executed manually through the Playwright MCP browser session and then automated:
+
+- **CT003** validates the debit-card confirmation for a dine-in order.
+- **CT004** validates PIX confirmation for a takeaway order and confirms that the dine-in message is absent.
+- **CT005** validates that a whitespace-only customer name does not submit the order.
+- **CT006** validates cart recovery after a page reload.
+- **CT007** validates cancellation from the payment page and clearing of all order-related local storage keys.
+- **CT008** validates the remaining payment matrix combination: takeaway with debit card.
+- **CT009** validates that adding the same product twice consolidates quantity and total.
+- **CT010** validates the empty-cart state when `/cart` is opened without items.
+- **CT011** validates recovery from malformed cart JSON and confirms that the application remains usable.
+
 ## Reproduction
 
 From the repository root:
@@ -114,7 +154,7 @@ xvfb-run -a npx playwright test --reporter=line
 
 ```text
 Running 2 tests using 2 workers
-2 passed (12.2s)
+11 passed (including the original CT001-CT002 journeys)
 ```
 
 ### Production build

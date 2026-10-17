@@ -104,12 +104,56 @@ The following are product or UX improvements rather than failed acceptance crite
 
 1. Make the “order sent to the kitchen” state more explicit to the customer.
 2. Improve the visual distinction of loading and submit states while an order is being created.
+3. Replace invalid persisted cart data after logging the parse error, so recovery is explicit.
 
 ## Limitations
 
 - This report documents the recorded CT001 manual execution; it is not a claim that every application feature was manually tested.
 - The source log does not include an execution timestamp, browser version, operating-system version, or screenshot attachments.
 - The manual scenario validates one dine-in order and one PIX payment path. Other payment methods and negative paths require separate execution.
+
+## Additional manual regression executed through Playwright MCP
+
+The following scenarios were executed manually in Chromium through the Playwright MCP browser session after the original CT001 execution.
+
+| ID | Scenario | Evidence observed | Status |
+|---|---|---|:---:|
+| CT003 | Dine-in with debit card | Order reached `/payment/debit/confirm`; customer, debit method, dine-in type, item, and dine-in calling message were displayed. | PASS |
+| CT004 | Takeaway with PIX | Order reached `/payment/pix/confirm`; customer, PIX method, takeaway type, and item were displayed; the dine-in calling message was absent. | PASS |
+| CT005 | Blank customer name validation | Submitting a name containing only spaces kept the checkout dialog open and did not navigate to payment. | PASS |
+| CT006 | Cart persistence after reload | A Big Mock item remained visible after reloading the cart page, with the expected quantity and total. | PASS |
+| CT007 | Cancel pending order | Cancelling from the payment page returned to `/` and cleared cart, order type, and current-order local storage keys. | PASS |
+| CT008 | Takeaway with debit card | Order reached `/payment/debit/confirm` with takeaway type and the debit method displayed. | PASS |
+| CT009 | Add the same product twice | Adding Big Mock twice consolidated the item count to two and recalculated the total to R$ 79,80. | PASS |
+| CT010 | Open an empty cart directly | `/cart` displayed the empty-cart state and the **View menu** action. | PASS |
+| CT011 | Recover from invalid cart JSON | The menu remained usable and the cart was reset to `[]`; the browser console logged a JSON parse error. | PASS with observation |
+
+### Manual MCP evidence summary
+
+```text
+CT003: /payment/debit/confirm, dine-in confirmation visible
+CT004: /payment/pix/confirm, takeaway confirmation visible, dine-in message absent
+CT005: checkout dialog remained open after whitespace-only name
+CT006: Big Mock persisted after page reload
+CT007: /, mcbugs-cart-items=[], mcbugs-order-type=null, mcbugs-current-order=null
+CT008: /payment/debit/confirm, takeaway confirmation visible
+CT009: /menu, / 2 itens, R$ 79,80
+CT010: /cart, "Nada Encontrado Aqui", "Ver cardápio"
+CT011: /menu, invalid JSON recovered to mcbugs-cart-items=[]
+```
+
+## Recommended future coverage
+
+The following areas remain recommended for future test cycles:
+
+- Debit, PIX, and credit payment combinations for every order type.
+- Duplicate-click protection and duplicate-order prevention.
+- Supabase failure, timeout, and network-recovery scenarios.
+- Direct database assertions in an isolated test environment.
+- Keyboard-only and automated accessibility checks.
+- Firefox, WebKit, and mobile viewport coverage.
+- Performance budgets and bundle-size monitoring.
+- Security verification of Supabase RLS and server-side price validation.
 
 ## Conclusion
 

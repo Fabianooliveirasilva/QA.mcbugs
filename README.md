@@ -166,6 +166,11 @@ yarn supabase status
 - [Documentação do Supabase](https://supabase.com/docs)
 - [Documentação do Vite](https://vitejs.dev)
 
+## 🧪 Quality Assurance Reports
+
+- [Manual Testing Report](./Docs/reports/manual-testing-report.md)
+- [Automated Testing Report](./Docs/reports/automation-testing-report.md)
+
 ---
 
 ## 🐛 Encontrou um Bug?

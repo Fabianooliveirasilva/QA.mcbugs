@@ -4,6 +4,11 @@
 
 ✅ PASSOU
 
+## Última execução observada
+
+- Data: 18/10/2026
+- Nenhum pedido foi criado; a rota `/cart` foi acessada diretamente com o carrinho vazio.
+
 ## Método e fonte
 
 - Execução inicial em navegador controlado por agente via Playwright MCP.

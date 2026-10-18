@@ -4,6 +4,11 @@
 
 ✅ PASSOU
 
+## Última execução observada
+
+- Data: 18/10/2026
+- Nenhum pedido foi criado, conforme esperado para este cenário.
+
 ## Método e fonte
 
 - Execução inicial em navegador controlado por agente via Playwright MCP.
@@ -32,6 +37,7 @@ Confirmar que um nome contendo somente espaços não permite o envio do pedido.
 - O dialog `Finalizar Pedido` permaneceu visível.
 - O campo continuou com o valor `"   "`.
 - O texto `enviando a cozinha....` não foi exibido.
+- O valor efetivamente mantido no campo foi `"   "` (três espaços).
 
 ## Conclusão
 

@@ -4,6 +4,11 @@
 
 ✅ PASSOU
 
+## Última execução observada
+
+- Data: 18/10/2026
+- Nenhum pedido foi criado; o caso avaliou somente a persistência do carrinho.
+
 ## Método e fonte
 
 - Execução inicial em navegador controlado por agente via Playwright MCP.
@@ -32,6 +37,7 @@ Verificar que o item adicionado ao pedido permanece disponível após o recarreg
 - `localStorage.mcbugs-cart-items` continha `big-mock`.
 - Big Mock ficou visível na página `/cart`.
 - O preço `R$ 39,90` foi identificado duas vezes.
+- O valor persistido continha o produto `big-mock` com quantidade `1`.
 
 ## Conclusão
 

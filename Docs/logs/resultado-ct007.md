@@ -4,6 +4,11 @@
 
 ✅ PASSOU
 
+## Última execução observada
+
+- Data: 18/10/2026
+- O pedido pendente foi cancelado antes da seleção de pagamento.
+
 ## Método e fonte
 
 - Execução inicial em navegador controlado por agente via Playwright MCP.
@@ -33,6 +38,7 @@ Validar o cancelamento de um pedido pendente e a limpeza do estado local relacio
 - `localStorage.mcbugs-cart-items` foi limpo.
 - `localStorage.mcbugs-order-type` foi removido.
 - `localStorage.mcbugs-current-order` foi removido.
+- Estado final observado: rota `/`, carrinho `[]`, tipo de pedido nulo e pedido atual nulo.
 
 ## Conclusão
 

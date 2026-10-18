@@ -4,6 +4,14 @@
 
 ✅ PASSOU
 
+## Última execução observada
+
+- Data: 18/10/2026
+- Pedido gerado: `#90`
+- Cliente informado: `QA CT008`
+- Total: `R$ 10,90`
+- Rota de confirmação: `/payment/debit/confirm`
+
 ## Método e fonte
 
 - Execução inicial em navegador controlado por agente via Playwright MCP.
@@ -30,9 +38,10 @@ Validar um pedido takeaway com pagamento por cartão de débito.
 ## Evidências verificadas
 
 - Rota final: `/payment/debit/confirm`.
-- Cliente exibido: `Manual Takeaway Debit`.
+- Cliente exibido: `QA CT008`.
 - Tipo do pedido exibido: `Para levar`.
 - Método exibido duas vezes: `Cartão de Débito`.
+- Item exibido: `1x Batatas Full Stack`.
 
 ## Limitações
 

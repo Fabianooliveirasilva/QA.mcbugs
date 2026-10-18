@@ -4,6 +4,14 @@
 
 ✅ PASSOU
 
+## Última execução observada
+
+- Data: 18/10/2026
+- Pedido gerado: `#87`
+- Cliente informado: `QA CT004`
+- Total: `R$ 10,90`
+- Rota de confirmação: `/payment/pix/confirm`
+
 ## Método e fonte
 
 - Execução inicial em navegador controlado por agente via Playwright MCP.
@@ -32,10 +40,11 @@ Validar um pedido takeaway com pagamento via PIX e confirmar que a mensagem espe
 ## Evidências verificadas
 
 - Rota final: `/payment/pix/confirm`.
-- Cliente exibido: `Manual PIX Takeaway`.
+- Cliente exibido: `QA CT004`.
 - Tipo do pedido exibido: `Para levar`.
 - Método exibido duas vezes: `PIX`.
 - Mensagem de aguardar chamada não exibida.
+- Item exibido: `1x Batatas Full Stack`.
 
 ## Limitações
 

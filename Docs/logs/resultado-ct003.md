@@ -4,9 +4,18 @@
 
 ✅ PASSOU
 
+## Última execução observada
+
+- Data: 18/10/2026
+- Pedido gerado: `#86`
+- Cliente informado: `QA CT003`
+- Total: `R$ 39,90`
+- Rota de confirmação: `/payment/debit/confirm`
+
 ## Método e fonte
 
 - Execução inicial em navegador controlado por agente via Playwright MCP.
+- Reexecução observada em navegador controlado no ambiente local.
 - Automação posterior com Playwright em Chromium.
 - Spec: [`playwright/e2e/ct003-ct007-regression.spec.ts`](../../playwright/e2e/ct003-ct007-regression.spec.ts)
 - Teste: `CT003 - completes a dine-in order with debit card`
@@ -30,17 +39,19 @@ Validar a conclusão de um pedido dine-in com pagamento por cartão de débito e
 | 2 | Selecionar **Para comer aqui** | Navegação para o menu | Fluxo dine-in iniciado e produto Big Mock disponibilizado | PASS |
 | 3 | Adicionar um Big Mock | Produto incluído no carrinho | Produto adicionado ao pedido | PASS |
 | 4 | Abrir o pedido e iniciar a finalização | Drawer de finalização visível | Drawer aberto e campo de nome disponível | PASS |
-| 5 | Informar `Manual Debit` e finalizar | Pedido criado e navegação para `/payment` | Página de pagamento acessada | PASS |
+| 5 | Informar o nome do cliente e finalizar | Pedido criado e navegação para `/payment` | Pedido `#86` criado e página de pagamento acessada | PASS |
 | 6 | Selecionar **Cartão de Débito** | Navegação para `/payment/debit/confirm` | Rota de confirmação acessada | PASS |
-| 7 | Validar a confirmação | Nome, tipo dine-in, método de pagamento e mensagem de chamada visíveis | `Manual Debit`, `Comer no local` e `Cartão de Débito` foram exibidos; mensagem de aguardar chamada ficou visível | PASS |
+| 7 | Validar a confirmação | Nome, tipo dine-in, método de pagamento e mensagem de chamada visíveis | `QA CT003`, `Comer no local` e `Cartão de Débito` foram exibidos; mensagem de aguardar chamada ficou visível | PASS |
 
 ## Evidências verificadas
 
 - Rota final: `/payment/debit/confirm`.
-- Cliente exibido: `Manual Debit`.
+- Cliente exibido: `QA CT003`.
 - Tipo do pedido exibido: `Comer no local`.
 - Método exibido duas vezes: `Cartão de Débito`.
 - Mensagem de aguardar chamada exibida para o pedido dine-in.
+- Pedido exibido: `#86`.
+- Total exibido: `R$ 39,90`.
 
 ## Limitações
 

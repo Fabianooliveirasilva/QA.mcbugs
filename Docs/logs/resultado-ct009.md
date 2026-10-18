@@ -4,6 +4,11 @@
 
 ✅ PASSOU
 
+## Última execução observada
+
+- Data: 18/10/2026
+- Nenhum pedido foi criado; o caso avaliou somente o carrinho.
+
 ## Método e fonte
 
 - Execução inicial em navegador controlado por agente via Playwright MCP.
@@ -29,6 +34,7 @@ Verificar que adicionar o mesmo produto duas vezes consolida a quantidade e reca
 
 - Quantidade consolidada: 2 itens.
 - Total calculado: `R$ 79,80`.
+- `localStorage.mcbugs-cart-items` manteve um único produto com `quantity: 2`.
 - O cenário não cria duas linhas independentes no fluxo validado.
 
 ## Conclusão

@@ -4,6 +4,11 @@
 
 ✅ PASSOU com observação
 
+## Última execução observada
+
+- Data: 18/10/2026
+- Nenhum pedido foi criado; o caso avaliou a recuperação do estado persistido.
+
 ## Método e fonte
 
 - Execução inicial em navegador controlado por agente via Playwright MCP.
@@ -30,6 +35,7 @@ Verificar se a aplicação permanece utilizável e recupera o carrinho quando o 
 - A categoria `🍔 Lanches` permaneceu visível após a recuperação.
 - O valor final de `localStorage.mcbugs-cart-items` foi `[]`.
 - O relatório registra um erro de parse no console durante a recuperação.
+- O erro observado foi `SyntaxError: Unexpected token 'i'` ao tentar interpretar `invalid-json`.
 
 ## Observação
 

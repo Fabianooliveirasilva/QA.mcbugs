@@ -1,4 +1,4 @@
-# CT001 - Jornada Completa: Pedido "Para comer aqui"
+# CT001 - Execução Assistida: Pedido "Para comer aqui"
 
 ## Status final
 
@@ -10,12 +10,12 @@ Validar o fluxo completo de um pedido do tipo "Para comer aqui" desde a seleçã
 
 ## Pré-condições verificadas
 
-- Sistema acessível em http://localhost:8080
+- Sistema acessível em http://localhost:3000
 - App em funcionamento
 - Banco Supabase conectado e acessível
 - localStorage limpo antes da execução
 
-## Execução dos passos
+## Execução assistida dos passos
 
 | Passo | Ação | Resultado | Evidência |
 |---|---|---|---|
@@ -62,4 +62,4 @@ Nenhum problema funcional foi identificado no fluxo executado.
 
 ## Conclusão
 
-O cenário CT001 foi executado com sucesso, cobrindo toda a jornada de pedido para consumo no local, incluindo criação do pedido, atualização de pagamento, confirmação e limpeza do estado final.
+O cenário CT001 foi executado com sucesso por meio de navegador controlado por agente via Playwright MCP, cobrindo toda a jornada de pedido para consumo no local, incluindo criação do pedido, atualização de pagamento, confirmação e limpeza do estado final.

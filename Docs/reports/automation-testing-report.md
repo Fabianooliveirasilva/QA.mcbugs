@@ -9,12 +9,12 @@
 | Language | TypeScript |
 | Browser | Chromium |
 | Test runner | `npx playwright test --reporter=line` |
-| Execution date | 2026-10-17 |
+| Execution date | 2026-10-18 |
 | Result | **11 passed, 0 failed** |
 
 ## Executive summary
 
-The automated regression suite executed both complete customer journeys currently implemented in the repository:
+The automated regression suite executes the 11 tests currently implemented in the repository (CT001–CT011):
 
 - CT001: dine-in order paid by PIX
 - CT002: takeaway order paid by credit card
@@ -28,7 +28,7 @@ The automated regression suite executed both complete customer journeys currentl
 - CT010: empty-cart state
 - CT011: invalid persisted cart recovery
 
-Both tests passed in Chromium. The suite exercised the UI through accessible roles and labels, validated route changes, checked local storage state, verified product and cart data, and confirmed payment-specific confirmation pages.
+All 11 tests passed in Chromium. The suite exercised the UI through accessible roles and labels, validated route changes, checked local storage state, verified product and cart data, and confirmed payment-specific confirmation pages.
 
 ## Scope and coverage
 
@@ -118,18 +118,18 @@ The suite uses:
 
 The test files are intentionally readable as executable business journeys, which makes them useful both as regression checks and as living acceptance-test documentation.
 
-### Additional regression scenarios
+### Additional assisted regression scenarios
 
 Source: [`playwright/e2e/ct003-ct007-regression.spec.ts`](../../playwright/e2e/ct003-ct007-regression.spec.ts)
 
-These five scenarios were first executed manually through the Playwright MCP browser session and then automated:
+These scenarios were first executed as assisted regression through the Playwright MCP browser session and then automated:
 
 - **CT003** validates the debit-card confirmation for a dine-in order.
 - **CT004** validates PIX confirmation for a takeaway order and confirms that the dine-in message is absent.
 - **CT005** validates that a whitespace-only customer name does not submit the order.
 - **CT006** validates cart recovery after a page reload.
 - **CT007** validates cancellation from the payment page and clearing of all order-related local storage keys.
-- **CT008** validates the remaining payment matrix combination: takeaway with debit card.
+- **CT008** validates takeaway with debit card.
 - **CT009** validates that adding the same product twice consolidates quantity and total.
 - **CT010** validates the empty-cart state when `/cart` is opened without items.
 - **CT011** validates recovery from malformed cart JSON and confirms that the application remains usable.
@@ -153,8 +153,8 @@ xvfb-run -a npx playwright test --reporter=line
 ### End-to-end suite
 
 ```text
-Running 2 tests using 2 workers
-11 passed (including the original CT001-CT002 journeys)
+Running 11 tests using 4 workers
+11 passed (26.6s)
 ```
 
 ### Production build
@@ -166,16 +166,17 @@ Build completed successfully.
 
 ### Lint status
 
-`npm run lint` currently reports three errors and eight warnings in existing application/configuration files, including `src/components/ui/command.tsx`, `src/components/ui/textarea.tsx`, and `tailwind.config.ts`. These findings did not prevent the production build or the two Playwright journeys from passing, but they should be addressed in a separate code-quality task.
+`npm run lint` currently reports three errors and eight warnings in existing application/configuration files, including `src/components/ui/command.tsx`, `src/components/ui/textarea.tsx`, and `tailwind.config.ts`. These findings did not prevent the production build or the Playwright suite from passing, but they should be addressed in a separate code-quality task.
 
 ## Limitations and next steps
 
 - The automated tests currently run only in Chromium; Firefox, WebKit, and mobile projects are not enabled in the Playwright configuration.
 - The tests validate persistence indirectly through UI and `localStorage`; they do not query Supabase directly.
-- Negative paths are not covered yet, including empty customer name, failed order creation, network failure, and unavailable payment options.
+- The dine-in with credit-card combination is not covered by any test.
+- Negative paths are not covered yet, including a zero-character customer name, very long names, special characters, failed order creation, network failure, and unavailable payment options. A name containing only whitespace is covered by CT005.
 - The suite would benefit from CI execution with stored HTML reports, traces on failure, and test artifacts.
-- Additional payment coverage should include PIX, debit card, and credit card across the supported order types.
+- Additional payment coverage should include the dine-in with credit-card combination and any other payment combinations not currently covered.
 
 ## Conclusion
 
-The current automated regression baseline is healthy: **2 of 2 implemented end-to-end journeys passed**. The suite provides meaningful coverage of the principal ordering flows and demonstrates maintainable Playwright practices suitable for continued project evolution.
+All **11 of 11 implemented end-to-end tests passed** in Chromium. The suite covers the listed dine-in and takeaway ordering flows, payment combinations, validation, persistence, cancellation, empty-cart, and invalid-cart-recovery scenarios.

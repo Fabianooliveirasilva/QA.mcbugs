@@ -9,7 +9,7 @@
 
 ## About me
 
-**Fabiano Oliveira Silva** — QA Junior, focused on test design and E2E automation.<br>
+**Fabiano Oliveira Silva** — QA Junior, focused on manual test design and E2E automation.<br>
 [LinkedIn](https://www.linkedin.com/in/fabiano-silva-oliveira/) · [GitHub](https://github.com/Fabianooliveirasilva)
 
 ## What I tested
@@ -19,11 +19,11 @@ The scope covers the ordering journey of a self-service restaurant kiosk, from s
 - **Agent-assisted execution (Playwright MCP):** complete order journeys, payment combinations, validations, persistence, cancellation, empty state, and invalid-data recovery (CT001, CT003 to CT011).
 - **Automated E2E tests:** 11 cases in Chromium, implemented with Playwright and TypeScript (CT001–CT011).
 
-| Case | Type | Recorded result |
-|---|---|---|
-| CT001 | Assisted (Playwright MCP) + E2E | PASS |
-| CT002 | E2E | PASS |
-| CT003–CT011 | Assisted (Playwright MCP) + E2E | PASS* |
+| Case        | Type                            | Recorded result |
+| ----------- | ------------------------------- | --------------- |
+| CT001       | Assisted (Playwright MCP) + E2E | PASS            |
+| CT002       | E2E                             | PASS            |
+| CT003–CT011 | Assisted (Playwright MCP) + E2E | PASS\*          |
 
 \* CT011 passed with a console parse-error observation. Details and evidence are available in the [reports](#results).
 
@@ -150,11 +150,11 @@ El alcance cubre el flujo de compra de un tótem de autoservicio, desde la selec
 - **Ejecución asistida por agente (Playwright MCP):** jornadas completas de pedido, combinaciones de pago, validaciones, persistencia, cancelación, estado vacío y recuperación de datos inválidos (CT001, CT003 a CT011).
 - **Pruebas E2E automatizadas:** 11 casos en Chromium, implementados con Playwright y TypeScript (CT001–CT011).
 
-| Caso | Tipo | Resultado registrado |
-|---|---|---|
-| CT001 | Asistido (Playwright MCP) + E2E | PASS |
-| CT002 | E2E | PASS |
-| CT003–CT011 | Asistido (Playwright MCP) + E2E | PASS* |
+| Caso        | Tipo                            | Resultado registrado |
+| ----------- | ------------------------------- | -------------------- |
+| CT001       | Asistido (Playwright MCP) + E2E | PASS                 |
+| CT002       | E2E                             | PASS                 |
+| CT003–CT011 | Asistido (Playwright MCP) + E2E | PASS\*               |
 
 \* CT011 pasó con una observación de error de parseo en la consola. Los detalles y evidencias están disponibles en los [informes](#resultados-1).
 

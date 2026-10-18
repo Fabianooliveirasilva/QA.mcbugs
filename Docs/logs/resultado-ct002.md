@@ -1,4 +1,6 @@
-# CT002 - Jornada Completa: Pedido "Para levar"
+# CT002 - Execução Assistida: Pedido "Para levar"
+
+Execução realizada em navegador controlado por agente via Playwright MCP e posteriormente automatizada com Playwright.
 
 ## Status final
 
@@ -10,12 +12,12 @@ Validar o fluxo completo de um pedido do tipo "Para levar" desde a seleção ini
 
 ## Pré-condições verificadas
 
-- Sistema acessível em http://localhost:8080
+- Sistema acessível em http://localhost:3000
 - App em funcionamento
 - Banco Supabase conectado e acessível
 - localStorage limpo antes da execução
 
-## Execução dos passos
+## Execução assistida dos passos
 
 | Passo | Ação | Resultado | Evidência |
 |---|---|---|---|
@@ -74,4 +76,4 @@ Nenhum problema funcional foi identificado no fluxo executado.
 
 ## Conclusão
 
-O cenário CT002 foi executado com sucesso, cobrindo a jornada completa de pedido para retirada, incluindo navegação entre categorias, criação do pedido, confirmação de pagamento e limpeza do estado final.
+O cenário CT002 foi executado com sucesso por meio de navegador controlado por agente via Playwright MCP e posteriormente automatizado com Playwright, cobrindo a jornada completa de pedido para retirada, incluindo navegação entre categorias, criação do pedido, confirmação de pagamento e limpeza do estado final.

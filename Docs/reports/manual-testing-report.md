@@ -1,20 +1,22 @@
-# Manual Testing Report
+# Assisted Execution Report (Playwright MCP)
+
+All scenarios in this report were executed in Chromium through an agent-controlled browser session (Playwright MCP). No scenario was executed manually by a person.
 
 ## McBugs Self-Service Restaurant Kiosk
 
 | Field | Value |
 |---|---|
-| Test type | Manual end-to-end testing |
+| Test type | Agent-assisted end-to-end execution (Playwright MCP) |
 | Primary scenario | CT001 - Dine-in order |
 | Execution status | **Passed** |
-| Application URL | `http://localhost:8080` |
-| Evidence source | Manual execution log in [`Docs/logs/resultado-ct001.md`](../logs/resultado-ct001.md) |
+| Application URL | `http://localhost:3000` |
+| Evidence source | Execution log in [`Docs/logs/resultado-ct001.md`](../logs/resultado-ct001.md) |
 | Database | Supabase |
 | Execution date | Not recorded in the source log |
 
 ## Executive summary
 
-The complete dine-in ordering journey was manually executed from order-type selection through payment-method confirmation. The test covered navigation, product selection, quantity calculation, cart persistence, order creation, payment selection, database persistence, and final state cleanup.
+The complete dine-in ordering journey was executed through an agent-controlled browser session from order-type selection through payment-method confirmation. The test covered navigation, product selection, quantity calculation, cart persistence, order creation, payment selection, database persistence, and final state cleanup.
 
 The scenario passed without functional defects. The order was created with the expected customer, order type, payment method, status, total, and item details. The application also cleared the local state after the user selected **Start a New Order**.
 
@@ -35,7 +37,7 @@ Verify that a customer can place a complete **dine-in** order and that the appli
 
 The following conditions were verified before execution:
 
-- The application was available at `http://localhost:8080`.
+- The application was available at `http://localhost:3000`.
 - The application was running.
 - Supabase was connected and accessible.
 - `localStorage` was cleared before the test.
@@ -108,13 +110,13 @@ The following are product or UX improvements rather than failed acceptance crite
 
 ## Limitations
 
-- This report documents the recorded CT001 manual execution; it is not a claim that every application feature was manually tested.
+- This report documents the recorded CT001 assisted execution; it is not a claim that every application feature was covered.
 - The source log does not include an execution timestamp, browser version, operating-system version, or screenshot attachments.
-- The manual scenario validates one dine-in order and one PIX payment path. Other payment methods and negative paths require separate execution.
+- The assisted scenario validates one dine-in order and one PIX payment path. Other payment methods and negative paths require separate execution.
 
-## Additional manual regression executed through Playwright MCP
+## Additional assisted regression
 
-The following scenarios were executed manually in Chromium through the Playwright MCP browser session after the original CT001 execution.
+The following scenarios were executed in Chromium through the Playwright MCP browser session after the original CT001 execution.
 
 | ID | Scenario | Evidence observed | Status |
 |---|---|---|:---:|
@@ -128,7 +130,7 @@ The following scenarios were executed manually in Chromium through the Playwrigh
 | CT010 | Open an empty cart directly | `/cart` displayed the empty-cart state and the **View menu** action. | PASS |
 | CT011 | Recover from invalid cart JSON | The menu remained usable and the cart was reset to `[]`; the browser console logged a JSON parse error. | PASS with observation |
 
-### Manual MCP evidence summary
+### Assisted MCP evidence summary
 
 ```text
 CT003: /payment/debit/confirm, dine-in confirmation visible
@@ -157,4 +159,4 @@ The following areas remain recommended for future test cycles:
 
 ## Conclusion
 
-CT001 passed. The manual evidence demonstrates a consistent end-to-end dine-in experience, including order persistence in Supabase and cleanup after completion. The scenario is suitable as a baseline acceptance test for future regression cycles.
+CT001 passed. The assisted execution evidence demonstrates a consistent end-to-end dine-in experience, including order persistence in Supabase and cleanup after completion. The scenario is suitable as a baseline acceptance test for future regression cycles.

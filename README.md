@@ -1,212 +1,259 @@
-![Cover](./.github/cover.png)
+# McBugs: QA Portfolio
 
-<div align="center">
+> **Credit:** the system under test is a fork of the [mcbugs](https://github.com/TBCodeBase/mcbugs) project, created by [Fernando Papito](https://github.com/testbeyond) for the [Testing the Méqui Kiosk with AI](https://testbeyond.com/) course. This repository documents the QA work performed on that system.
 
-**Sistema de Totem Interativo para Restaurantes**
+## Language / Idioma
 
-[![Vite](https://img.shields.io/badge/Vite-5.x-646CFF?style=flat-square&logo=vite)](https://vitejs.dev/)
-[![React](https://img.shields.io/badge/React-18.x-61DAFB?style=flat-square&logo=react)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
-[![Supabase](https://img.shields.io/badge/Supabase-Latest-3ECF8E?style=flat-square&logo=supabase)](https://supabase.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+- **English** (current section)
+- [Español](#mcbugs-portafolio-de-qa)
 
-[Reportar Bug](https://github.com/testbeyond/mc-bugs/issues) • [Solicitar Feature](https://github.com/testbeyond/mc-bugs/issues)
+## About me
 
-</div>
+**Fabiano Oliveira Silva** — QA Junior, focused on test design and E2E automation.<br>
+[LinkedIn](https://www.linkedin.com/in/fabiano-silva-oliveira/) · [GitHub](https://github.com/Fabianooliveirasilva)
 
-# 🍔🐞 McBugs
+## What I tested
 
-## 📖 Sobre o Projeto
+The scope covers the ordering journey of a self-service restaurant kiosk, from selecting the order type through payment confirmation:
 
-O **McBugs** é um sistema completo de totem de autoatendimento desenvolvido exclusivamente para o curso **"Testando o Totem do Méqui com IA"**. O projeto simula a experiência real de um totem do McDonald's, oferecendo uma interface moderna e intuitiva para pedidos em restaurantes.
+- **Agent-assisted execution (Playwright MCP):** complete order journeys, payment combinations, validations, persistence, cancellation, empty state, and invalid-data recovery (CT001, CT003 to CT011).
+- **Automated E2E tests:** 11 cases in Chromium, implemented with Playwright and TypeScript (CT001–CT011).
 
----
+| Case | Type | Recorded result |
+|---|---|---|
+| CT001 | Assisted (Playwright MCP) + E2E | PASS |
+| CT002 | E2E | PASS |
+| CT003–CT011 | Assisted (Playwright MCP) + E2E | PASS* |
 
-## 🛠️ Stack Tecnológica
+\* CT011 passed with a console parse-error observation. Details and evidence are available in the [reports](#results).
 
-### Core
+Current out of scope: Firefox, WebKit, and mobile devices; automated accessibility; performance; security/RLS; network or Supabase failures; and other negative scenarios not described in the reports.
 
-- **[Vite](https://vitejs.dev/)** - Build tool ultrarrápido para desenvolvimento moderno
-- **[React 18](https://react.dev/)** - Biblioteca UI com recursos modernos
-- **[TypeScript](https://www.typescriptlang.org/)** - Type-safety e melhor DX
+No test cases were executed manually by a person, and no formal exploratory sessions were conducted in this cycle.
 
-### Backend & Database
+## QA tools and stack
 
-- **[Supabase](https://supabase.com/)** - Backend as a Service com PostgreSQL
-- **[PostgreSQL](https://www.postgresql.org/)** - Banco de dados relacional robusto
+- [Playwright Test](https://playwright.dev/) 1.63.0 for E2E automation.
+- TypeScript for scenario implementation.
+- Chromium (the only project currently enabled in the configuration).
+- Playwright MCP to execute scenarios with agent assistance before automation.
+- Supabase as the backend tested in the assisted order-creation and order-query flow.
+- Vite/React as the web application under test.
 
----
+## Results
 
-## 📋 Pré-requisitos
+- **Total automated tests:** 11 real tests in `playwright/e2e/`, covering CT001 to CT011.
+- **Last recorded execution:** 2026-10-17 — **11 passed, 0 failed** in Chromium.
+- **Recorded assisted-execution result:** CT001 passed with no functional defects identified.
 
-Certifique-se de ter instalado:
+Full reports:
 
-- **Node.js** ≥ 18.0.0 ([Download](https://nodejs.org/))
-- **Yarn** ≥ 1.22.0 ([Download](https://yarnpkg.com/))
-- **Git** ([Download](https://git-scm.com/))
-- Conta no **[Supabase](https://supabase.com)** (para banco de dados)
+- [Assisted execution report](./Docs/reports/manual-testing-report.md)
+- [Automated testing report](./Docs/reports/automation-testing-report.md)
 
----
+## How to run the tests
 
-## 🚀 Guia de Instalação
-
-### 1️⃣ Clone o Repositório
-
-```bash
-git clone <url-do-seu-repositorio>
-cd mcbugs-order-hub
-```
-
-### 2️⃣ Instale as Dependências
+From the repository root:
 
 ```bash
-yarn install
+npm install
+npm run dev
 ```
 
-### 3️⃣ Configure as Variáveis de Ambiente
+The local server runs at [http://localhost:3000](http://localhost:3000). To run the E2E suite, Playwright starts or reuses this server automatically:
 
-Crie um arquivo `.env.local` na raiz do projeto:
+```bash
+npx playwright test --reporter=line
+```
+
+Available project commands:
+
+```bash
+npm run build
+npm run lint
+npm run preview
+```
+
+## About the system under test
+
+McBugs simulates a self-service restaurant kiosk. The application uses:
+
+- React 18, TypeScript, and Vite 5;
+- Supabase/PostgreSQL for order persistence;
+- React Router, Tailwind CSS, and Radix UI components.
+
+Suggestions and issues can be submitted through the [repository issues](https://github.com/Fabianooliveirasilva/QA.mcbugs/issues):
+[Report a Bug](https://github.com/Fabianooliveirasilva/QA.mcbugs/issues) · [Request a Feature](https://github.com/Fabianooliveirasilva/QA.mcbugs/issues)
+
+### Prerequisites
+
+- Node.js 18 or later;
+- npm;
+- Git;
+- A [Supabase](https://supabase.com) account and project.
+
+### Installation and Supabase configuration
+
+```bash
+git clone https://github.com/Fabianooliveirasilva/QA.mcbugs.git
+cd QA.mcbugs
+npm install
+```
+
+Create `.env.local` in the project root:
 
 ```env
-VITE_SUPABASE_URL=https://seu-project-ref.supabase.co
-VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY=sua-chave-publica-aqui
-VITE_SUPABASE_PROJECT_ID=seu-project-ref
+VITE_SUPABASE_URL=https://your-project-ref.supabase.co
+VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY=your-public-key
+VITE_SUPABASE_PROJECT_ID=your-project-ref
 ```
 
-> 💡 **Dica:** Veja a seção [Configurar o Supabase](#️-configurar-o-supabase) para obter suas credenciais.
+In Supabase, create a project and obtain the URL, public key, and project ID under **Settings > API**. Then apply the migrations through the SQL Editor, in this order:
 
-### 4️⃣ Inicie o Servidor de Desenvolvimento
+1. `supabase/migrations/20251209002507_9a9f0129-cc6b-4721-bcbc-5f53568415f9.sql`
+2. `supabase/migrations/20251209010000_add_sequential_order_number.sql`
+
+You can also use the CLI:
 
 ```bash
-yarn dev
+npx supabase login
+npx supabase link --project-ref your-project-ref
+npx supabase db push
 ```
 
-🎉 **Pronto!** Acesse [http://localhost:8080](http://localhost:8080)
+## Credits and license
+
+Credit to [Fernando Papito](https://github.com/testbeyond), author of the original system and the [Testing the Méqui Kiosk with AI](https://testbeyond.com/) course.
+
+This fork retains the [MIT](https://opensource.org/licenses/MIT) license and the reference to [COPYRIGHT.md](./COPYRIGHT.md).
 
 ---
 
-## ☁️ Configurar o Supabase
+# McBugs: Portafolio de QA
 
-### Criar Projeto no Supabase
+> **Crédito:** el sistema bajo prueba es un fork del proyecto [mcbugs](https://github.com/TBCodeBase/mcbugs), creado por [Fernando Papito](https://github.com/testbeyond) para el curso [Probando el Tótem de Méqui con IA](https://testbeyond.com/). Este repositorio documenta el trabajo de QA realizado sobre ese sistema.
 
-1. Acesse [https://supabase.com](https://supabase.com) e faça login
-2. Clique em **"New Project"**
-3. Preencha os dados:
-   - **Name**: Nome do seu projeto (ex: `mcbugs-order-hub`)
-   - **Database Password**: Crie uma senha forte e **anote-a**
-   - **Region**: Escolha a região mais próxima
-4. Clique em **"Create new project"** e aguarde a criação
+## Idioma
 
-### Obter Credenciais
+- [English](#mcbugs-qa-portfolio)
+- **Español** (sección actual)
 
-1. No dashboard do Supabase, vá em **Settings** → **API**
-2. Anote as seguintes informações:
-   - **Project URL** (ex: `https://xxxxx.supabase.co`)
-   - **anon/public key** (chave pública, começa com `eyJ...`)
-   - **Project ID** (encontrado na URL: `https://supabase.com/dashboard/project/seu-project-id`)
+## Sobre mí
 
-### 🗄️ Executar Migrations
+**Fabiano Oliveira Silva** — QA Junior, con enfoque en diseño de pruebas y automatización E2E.<br>
+[LinkedIn](https://www.linkedin.com/in/fabiano-silva-oliveira/) · [GitHub](https://github.com/Fabianooliveirasilva)
 
-Você tem duas opções:
+## Qué probé
 
-#### Opção A: Usando a CLI do Supabase (Recomendado)
+El alcance cubre el flujo de compra de un tótem de autoservicio, desde la selección del tipo de pedido hasta la confirmación del pago:
+
+- **Ejecución asistida por agente (Playwright MCP):** jornadas completas de pedido, combinaciones de pago, validaciones, persistencia, cancelación, estado vacío y recuperación de datos inválidos (CT001, CT003 a CT011).
+- **Pruebas E2E automatizadas:** 11 casos en Chromium, implementados con Playwright y TypeScript (CT001–CT011).
+
+| Caso | Tipo | Resultado registrado |
+|---|---|---|
+| CT001 | Asistido (Playwright MCP) + E2E | PASS |
+| CT002 | E2E | PASS |
+| CT003–CT011 | Asistido (Playwright MCP) + E2E | PASS* |
+
+\* CT011 pasó con una observación de error de parseo en la consola. Los detalles y evidencias están disponibles en los [informes](#resultados-1).
+
+Fuera del alcance actual: Firefox, WebKit y dispositivos móviles; accesibilidad automatizada; rendimiento; seguridad/RLS; fallos de red o de Supabase; y otros escenarios negativos no descritos en los informes.
+
+No se realizaron ejecuciones manuales por una persona ni sesiones exploratorias formales en este ciclo.
+
+## Herramientas y stack de QA
+
+- [Playwright Test](https://playwright.dev/) 1.63.0 para automatización E2E.
+- TypeScript para la implementación de los escenarios.
+- Chromium (único proyecto habilitado actualmente en la configuración).
+- Playwright MCP para ejecutar los escenarios con apoyo de un agente antes de automatizarlos.
+- Supabase como backend probado en el flujo asistido de creación y consulta del pedido.
+- Vite/React como aplicación web bajo prueba.
+
+## Resultados
+
+- **Total de pruebas automatizadas:** 11 pruebas reales en `playwright/e2e/`, cubriendo CT001 a CT011.
+- **Última ejecución registrada:** 17/10/2026 — **11 passed, 0 failed** en Chromium.
+- **Resultado registrado de la ejecución asistida:** CT001 pasó sin defectos funcionales identificados.
+
+Informes completos:
+
+- [Informe de ejecución asistida](./Docs/reports/manual-testing-report.md)
+- [Informe de pruebas automatizadas](./Docs/reports/automation-testing-report.md)
+
+## Cómo ejecutar las pruebas
+
+Desde la raíz del repositorio:
 
 ```bash
-# Instale a CLI do Supabase
-yarn add supabase -D
-
-# Faça login
-yarn supabase login
-
-# Link seu projeto (project-ref está na URL do dashboard)
-yarn supabase link --project-ref seu-project-ref
-
-# Execute as migrations
-yarn supabase db push
+npm install
+npm run dev
 ```
 
-#### Opção B: Usando o SQL Editor no Dashboard
-
-1. No dashboard do Supabase, vá em **SQL Editor**
-2. Clique em **"New query"**
-3. Execute as migrations na ordem:
-   - `supabase/migrations/20251209002507_9a9f0129-cc6b-4721-bcbc-5f53568415f9.sql`
-   - `supabase/migrations/20251209010000_add_sequential_order_number.sql`
-
-### ✅ Verificar Instalação
-
-1. No **Table Editor**, verifique se a tabela `orders` foi criada
-2. No **SQL Editor**, execute: `SELECT get_next_order_number();`
-
----
-
-## 🔧 Comandos Úteis
+El servidor local se ejecuta en [http://localhost:3000](http://localhost:3000). Para ejecutar la suite E2E, Playwright inicia o reutiliza este servidor automáticamente:
 
 ```bash
-# Desenvolvimento local
-yarn dev
-
-# Build local
-yarn build
-
-# Preview do build
-yarn preview
-
-# Executar migrations (com Supabase CLI)
-yarn supabase db push
-
-# Ver status do Supabase
-yarn supabase status
+npx playwright test --reporter=line
 ```
 
----
+Comandos disponibles:
 
-## 📚 Documentação Útil
+```bash
+npm run build
+npm run lint
+npm run preview
+```
 
-- [Documentação do Supabase](https://supabase.com/docs)
-- [Documentação do Vite](https://vitejs.dev)
+## Sobre el sistema bajo prueba
 
-## 🧪 Quality Assurance Reports
+McBugs simula un tótem de autoservicio para restaurantes. La aplicación utiliza:
 
-- [Manual Testing Report](./Docs/reports/manual-testing-report.md)
-- [Automated Testing Report](./Docs/reports/automation-testing-report.md)
+- React 18, TypeScript y Vite 5;
+- Supabase/PostgreSQL para la persistencia de los pedidos;
+- React Router, Tailwind CSS y componentes Radix UI.
 
----
+Las sugerencias y los problemas pueden registrarse en las [issues del repositorio](https://github.com/Fabianooliveirasilva/QA.mcbugs/issues):
+[Reportar un bug](https://github.com/Fabianooliveirasilva/QA.mcbugs/issues) · [Solicitar una funcionalidad](https://github.com/Fabianooliveirasilva/QA.mcbugs/issues)
 
-## 🐛 Encontrou um Bug?
+### Requisitos previos
 
-Ajude a melhorar o projeto! [Reporte aqui](https://github.com/testbeyond/mc-bugs/issues/new)
+- Node.js 18 o superior;
+- npm;
+- Git;
+- una cuenta y un proyecto en [Supabase](https://supabase.com).
 
----
+### Instalación y configuración de Supabase
 
-## 👨‍💻 Autor
+```bash
+git clone https://github.com/Fabianooliveirasilva/QA.mcbugs.git
+cd QA.mcbugs
+npm install
+```
 
-<div align="center">
+Crea `.env.local` en la raíz del proyecto:
 
-**Fernando Papito**
+```env
+VITE_SUPABASE_URL=https://tu-project-ref.supabase.co
+VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY=tu-clave-publica
+VITE_SUPABASE_PROJECT_ID=tu-project-ref
+```
 
-[![Website](https://img.shields.io/badge/Website-testbeyond.com-blue?style=flat-square&logo=google-chrome)](https://testbeyond.com)
-[![GitHub](https://img.shields.io/badge/GitHub-@testbeyond-181717?style=flat-square&logo=github)](https://github.com/testbeyond)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin)](https://linkedin.com/in/papitoio)
+En Supabase, crea un proyecto y obtén la URL, la clave pública y el project ID en **Settings > API**. Después, aplica las migrations mediante el SQL Editor, en este orden:
 
-</div>
+1. `supabase/migrations/20251209002507_9a9f0129-cc6b-4721-bcbc-5f53568415f9.sql`
+2. `supabase/migrations/20251209010000_add_sequential_order_number.sql`
 
----
+También puedes utilizar la CLI:
 
-## 🎓 Sobre o Curso
+```bash
+npx supabase login
+npx supabase link --project-ref tu-project-ref
+npx supabase db push
+```
 
-Este projeto foi desenvolvido exclusivamente para o curso:
+## Créditos y licencia
 
-**"Testando o Totem do Méqui com IA"**
+Crédito a [Fernando Papito](https://github.com/testbeyond), autor del sistema original y del curso [Probando el Tótem de Méqui con IA](https://testbeyond.com/).
 
-Um curso prático sobre testes automatizados em sistemas de autoatendimento utilizando ferramentas modernas e Inteligência Artificial.
-
----
-
-<div align="center">
-
-**Desenvolvido com ❤️ e ☕ por [Fernando Papito](https://testbeyond.com)**
-
-⭐ Se este projeto te ajudou, considere dar uma estrela!
-
-</div>
+Este fork mantiene la licencia [MIT](https://opensource.org/licenses/MIT) y la referencia a [COPYRIGHT.md](./COPYRIGHT.md).

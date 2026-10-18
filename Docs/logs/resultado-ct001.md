@@ -1,65 +1,66 @@
-# CT001 - Execução Assistida: Pedido "Para comer aqui"
+# CT001 - Execução Assistida e E2E: Pedido dine-in com PIX
 
 ## Status final
 
 ✅ PASSOU
 
+## Última execução observada
+
+- Data: 18/10/2026
+- Pedido gerado: `#99`
+- Cliente informado: `QA CT001`
+- Total: `R$ 85,70`
+- Rota de confirmação: `/payment/pix/confirm`
+
+## Método e fonte
+
+- Execução inicial em navegador controlado por agente via Playwright MCP.
+- Reexecução observada em navegador controlado no ambiente local.
+- Automação posterior com Playwright em Chromium.
+- Spec: [`playwright/e2e/ct001-dine-in.spec.ts`](../../playwright/e2e/ct001-dine-in.spec.ts)
+- Teste: `CT001 - deve concluir um pedido dine-in com pagamento via PIX`
+
 ## Objetivo
 
-Validar o fluxo completo de um pedido do tipo "Para comer aqui" desde a seleção inicial até a confirmação final do pagamento.
+Validar a conclusão de um pedido dine-in com dois Big Mock, uma Coca-Crash e pagamento por PIX.
 
-## Pré-condições verificadas
+## Pré-condições
 
-- Sistema acessível em http://localhost:3000
-- App em funcionamento
-- Banco Supabase conectado e acessível
-- localStorage limpo antes da execução
+- Aplicação disponível em `http://localhost:3000`.
+- Projeto Chromium habilitado.
+- Estado da aplicação limpo antes da execução.
+- Supabase disponível para a criação do pedido.
 
-## Execução assistida dos passos
+## Execução e resultados
 
-| Passo | Ação | Resultado | Evidência |
-|---|---|---|---|
-| 1 | Acessar URL raiz (/) | Passou | Página inicial carregada com as opções "Para comer aqui" e "Para levar" |
-| 2 | Clicar em "Para comer aqui" | Passou | orderType salvo como "dine-in" e redirecionamento para /menu |
-| 3 | Verificar menu | Passou | Página do menu exibiu categorias e produtos |
-| 4 | Clicar em Big Mock | Passou | Redirecionamento para /product/big-mock |
-| 5 | Verificar detalhes | Passou | Nome, imagem, preço, descrição e ingredientes exibidos corretamente |
-| 6 | Aumentar quantidade para 2 | Passou | Quantidade atualizada para 2 e valor total recalculado para R$ 79,80 |
-| 7 | Clicar em "Quero • R$ 79,80" | Passou | Produto adicionado ao carrinho e retorno para /menu |
-| 8 | Verificar barra do carrinho | Passou | Total e quantidade exibidos corretamente |
-| 9 | Clicar em "Ver pedido" | Passou | Redirecionamento para /cart |
-| 10 | Verificar itens do carrinho | Passou | Big Mock aparece com quantidade 2 e total correto |
-| 11 | Clicar em "Finalizar pedido" | Passou | Drawer de finalização aberto com campo de nome |
-| 12 | Inserir "João Silva" | Passou | Nome preenchido corretamente no campo |
-| 13 | Clicar em "Finalizar" | Passou | Pedido criado no Supabase com status "pending" e redirecionamento para /payment |
-| 14 | Escolher método PIX | Passou | Redirecionamento para /payment/pix/confirm |
-| 15 | Verificar confirmação | Passou | Página exibiu número do pedido, total, método PIX e instruções |
-| 16 | Verificar pedido no banco | Passou | Registro salvo com customer_name="João Silva", order_type="dine-in", payment_method="pix", status="pending" |
-| 17 | Clicar em "Fazer Novo Pedido" | Passou | Volta para / e limpa estado local |
+| Passo | Ação | Resultado esperado | Resultado observado | Status |
+|---:|---|---|---|:---:|
+| 1 | Limpar o estado da aplicação | Estado local sem dados residuais | Estado local limpo e página inicial recarregada | PASS |
+| 2 | Selecionar **Para comer aqui** | Navegação para o menu | Fluxo dine-in iniciado e `mcbugs-order-type` definido como `dine-in` | PASS |
+| 3 | Adicionar dois Big Mock | Produto incluído com quantidade 2 | Carrinho exibiu 2 Big Mock por `R$ 79,80` | PASS |
+| 4 | Adicionar uma Coca-Crash | Bebida incluída no carrinho | Carrinho exibiu 1 Coca-Crash por `R$ 5,90` | PASS |
+| 5 | Abrir o pedido e iniciar a finalização | Drawer de finalização visível | Carrinho exibiu 3 itens e total de `R$ 85,70` | PASS |
+| 6 | Informar o nome e finalizar | Pedido criado e navegação para `/payment` | Pedido criado e página de pagamento acessada | PASS |
+| 7 | Selecionar **PIX** | Navegação para `/payment/pix/confirm` | Rota de confirmação acessada para o pedido `#99` | PASS |
+| 8 | Validar a confirmação | Dados do pedido, PIX e mensagem de chamada visíveis | `QA CT001`, `Comer no local`, PIX, itens, total e mensagem foram exibidos | PASS |
+| 9 | Iniciar novo pedido | Retorno à raiz e limpeza do estado | Aplicação retornou para `/` e `mcbugs-cart-items` ficou como `[]` | PASS |
 
-## Evidências observadas
+## Evidências verificadas
 
-- Menu principal acessado com sucesso e a escolha de "Para comer aqui" gerou `localStorage.mcbugs-order-type = "dine-in"`.
-- Carrinho persistiu corretamente com item `Big Mock` em quantidade 2.
-- Após finalizar o pedido, a aplicação redirecionou para `/payment` e em seguida para `/payment/pix/confirm`.
-- Validação no banco Supabase:
-  - `customer_name`: "João Silva"
-  - `order_type`: "dine-in"
-  - `payment_method`: "pix"
-  - `status`: "pending"
-  - `total`: 79.8
-  - `items`: [{ "productId": "big-mock", "name": "Big Mock", "price": 39.9, "quantity": 2 }]
-- Ao clicar em "Fazer Novo Pedido", o estado foi resetado e a aplicação voltou para a tela inicial.
+- Rota final: `/payment/pix/confirm`.
+- Pedido exibido: `#99`.
+- Cliente exibido: `QA CT001`.
+- Tipo do pedido exibido: `Comer no local`.
+- Método de pagamento exibido: `PIX`.
+- Itens exibidos: `2x Big Mock` e `1x Coca-Crash`.
+- Total exibido: `R$ 85,70`.
+- Mensagem de aguardar chamada exibida para o pedido dine-in.
+- Após **Fazer Novo Pedido**, a aplicação retornou para `/` e o carrinho foi limpo.
 
-## Problemas encontrados
+## Limitações
 
-Nenhum problema funcional foi identificado no fluxo executado.
-
-## Sugestões de melhoria
-
-- Opcionalmente, exibir uma mensagem mais clara de "pedido enviado para a cozinha" em etapas futuras.
-- Melhorar a distinção visual dos estados de carregamento/submit durante a criação do pedido.
+Esta execução observou o comportamento da interface e o estado local da aplicação. Não foi realizada uma consulta independente ao banco para validar o registro criado.
 
 ## Conclusão
 
-O cenário CT001 foi executado com sucesso por meio de navegador controlado por agente via Playwright MCP, cobrindo toda a jornada de pedido para consumo no local, incluindo criação do pedido, atualização de pagamento, confirmação e limpeza do estado final.
+CT001 passou, cobrindo a jornada de pedido dine-in com dois Big Mock, uma Coca-Crash, pagamento por PIX, confirmação e limpeza do estado final.
